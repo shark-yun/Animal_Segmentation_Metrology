@@ -91,16 +91,16 @@
 
 **Eye Mask Centroid：** 以 Mask 所有前景像素的平均座標作為眼睛中心。
 
-\[
+$$
 C_x=\frac{\sum xM(x,y)}{\sum M(x,y)},\qquad
 C_y=\frac{\sum yM(x,y)}{\sum M(x,y)}
-\]
+$$
 
 **Euclidean Distance：** 使用兩個眼睛中心座標計算距離。
 
-\[
+$$
 D(P_1,P_2)=\sqrt{(x_1-x_2)^2+(y_1-y_2)^2}
-\]
+$$
 
 - **Inter-eye Distance**：同一隻動物左右眼中心的距離。
 - **Between-animal Right-eye Distance**：任意兩隻動物右眼中心的距離。
