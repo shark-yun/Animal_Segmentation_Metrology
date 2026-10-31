@@ -86,7 +86,7 @@
 
 
 ![seg_comapre](showcase/seg_comapre.png)
-![seg_comapre](showcase/eye_comapre.png)
+![eye_comapre](showcase/eye_compare.png)
 ![Success Cases](showcase/Success_cases.png)
 
 
