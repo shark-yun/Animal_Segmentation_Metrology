@@ -62,21 +62,22 @@
 - 4 個人工 Eye Center Landmarks
 - 3 組距離量測（Dog 雙眼、Cat 雙眼、Dog 與 Cat 右眼）
 
-透過人工 Polygon Annotation 建立 Binary Mask Ground Truth，並與模型預測結果比較。
 
-評估分成三個部分：
-
-| 評估層級 | 評估內容 | Metrics |
-|---|---|---|
-| Segmentation | 動物與眼睛 Mask | IoU、Dice、Precision、Recall |
-| Localization | 眼睛中心定位 | Euclidean Error、NME |
-| Metrology | 眼睛之間的距離 | MAE、RMSE、MAPE |
-
-由於目前僅針對一張影像建立完整的人工標註，因此定量結果代表該 Demo 的表現，不作為整個 COCO 資料集的整體準確率。
 
 
 ## 3. 系統架構（Methodology）
 
+主要流程：
+
+Yolo-Seg -> Animal Mask+Box
+-> Use Animal Mask+Box as ROI
+Ground Dino (Text Prompt) -> Eye Bounding Box
+
+Eye Bounding Box
+SAM -> Eye Mask
+get eye cenroid as point to calaute distance
+
+identigy left/right and caluation riht eye distnace
 
 ![Solution Flow Chart](showcase/solution_flow_chart.png)
 
@@ -84,12 +85,50 @@
 
 ## 4.  Evlaution
 
+透過人工 Polygon Annotation 建立 Binary Mask Ground Truth，並與模型預測結果比較。
 
-![seg_comapre](showcase/seg_comapre.png)
+評估分成三個部分：
+
+| 評估層級 | 評估內容 | Metrics | Main |
+|---|---|---|---|
+| Segmentation | 動物與眼睛 Mask | IoU、Precision、Recall | IoU：衡量 Prediction Mask 與 GT Mask 的重疊程度，驗證分割輪廓是否準確|
+| Localization | 眼睛中心定位 | Euclidean Error、NME |Euclidean Error：衡量預測眼睛中心與 GT 中心的像素距離；NME 進一步以 GT 雙眼距離正規化，便於比較不同大小的動物。|
+| Metrology | 眼睛之間的距離 | MAE、RMSE、MAPE |MAE：衡量模型量測距離與 GT 距離的平均絕對誤差；RMSE 強調較大誤差，MAPE 表示相對百分比誤差|
+
+
+![seg_comapre](showcase/seg_compare.png)
+![seg_comapre_table](showcase/seg_score.png)
+
 ![eye_comapre](showcase/eye_compare.png)
+![eye_comapre_table](showcase/eye_score.png)
 ![Success Cases](showcase/Success_cases.png)
 
+由於目前僅針對一張影像建立完整的人工標註，因此定量結果代表該 Demo 的表現，不作為整個 COCO 資料集的整體準確率。
 
+
+
+
+## Other Solution
+另一種方法是使用 Dog Facial Landmark Model 取代 Grounding DINO 進行眼睛定位。
+此方法使用眼睛 Landmark 作為 SAM 的 Point Prompt，探索另一種眼睛定位與分割策略。
+
+目前此方法主要針對狗臉部測試，尚未完成與主要方案在相同資料集上的定量比較。
+YOLO-Seg → Animal ROI → Facial Landmark Model → Eye Center → SAM → Distance Measurement
+![solution2](showcase/solution2.png)
+
+
+
+
+
+## Future Work:
+![fail_cat_blur](showcase/fail_cat_blur.png)
+[ ] Robustness：改善模糊、遮擋、小眼睛及眼睛候選框誤判等問題。
+
+[ ] Multi-species Generalization：支援不同動物類別與姿態的眼睛定位。(目前只做yolo內建10種class)
+
+[ ] Validation：擴充人工 Ground Truth 數量，評估不同影像條件下的量測誤差。
+
+[ ] Physical Metrology：加入相機校正與尺度資訊，將 Pixel Distance 延伸至實際物理量測。
 
 
 
