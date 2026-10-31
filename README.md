@@ -213,14 +213,20 @@ python -m pip install -r requirements-lock.txt
 
 > 模型權重與 COCO 測試影像需放置在程式指定的路徑下，才能正常執行。
 
+### Deployment & API
 
-## Other Possible Solution
-另一種方法是使用 Dog Facial Landmark Model 取代 Grounding DINO 進行眼睛定位。
-此方法使用眼睛 Landmark 作為 SAM 的 Point Prompt，探索另一種眼睛定位與分割策略。
+本專案目前以 **Jupyter Notebook** 執行離線影像推論及量測，尚未封裝成 REST API 或 Docker Image。
 
-目前此方法主要針對狗臉部測試，尚未完成與主要方案在相同資料集上的定量比較。
-YOLO-Seg → Animal ROI → Facial Landmark Model → Eye Center → SAM → Distance Measurement
-![solution2](showcase/solution2.png)
+- **Docker**：尚未容器化，目前使用 Conda 執行。
+- **API Documentation**：N/A（目前不提供 REST API）。
+- **Test Account**：N/A（本地模型推論無須帳號登入）。
+- **Environment Configuration**：參考 `.env.example`。
+
+未來可將推論流程封裝為 API，並透過 Docker 提供一致的部署環境。
+
+
+
+
 
 
 
@@ -236,14 +242,11 @@ YOLO-Seg → Animal ROI → Facial Landmark Model → Eye Center → SAM → Dis
 - [ ] Physical Metrology：加入相機校正與尺度資訊，將 Pixel Distance 延伸至實際物理量測。
 
 
-### Deployment & API
+## Other Possible Solution
+另一種方法是使用 Dog Facial Landmark Model 取代 Grounding DINO 進行眼睛定位。
+此方法使用眼睛 Landmark 作為 SAM 的 Point Prompt，探索另一種眼睛定位與分割策略。
 
-本專案目前以 **Jupyter Notebook** 執行離線影像推論及量測，尚未封裝成 REST API 或 Docker Image。
-
-- **Docker**：尚未容器化，目前使用 Conda 執行。
-- **API Documentation**：N/A（目前不提供 REST API）。
-- **Test Account**：N/A（本地模型推論無須帳號登入）。
-- **Environment Configuration**：參考 `.env.example`。
-
-未來可將推論流程封裝為 API，並透過 Docker 提供一致的部署環境。
+目前此方法主要針對狗臉部測試，尚未完成與主要方案在相同資料集上的定量比較。
+YOLO-Seg → Animal ROI → Facial Landmark Model → Eye Center → SAM → Distance Measurement
+![solution2](showcase/solution2.png)
 
