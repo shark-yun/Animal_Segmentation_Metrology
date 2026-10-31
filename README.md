@@ -227,7 +227,7 @@ YOLO-Seg → Animal ROI → Facial Landmark Model → Eye Center → SAM → Dis
 
 
 ## Future Work
-- [ ] **Head Pose & Eye Orientation**：目前依據 Eye Centroid 的水平座標判斷左右眼，主要適用於近正面臉部。未來可結合 Facial Landmark 或 Head Pose Estimation，改善側臉、頭部旋轉及眼睛遮擋時的左右眼判斷。
+- [ ] **Head Pose & Eye Orientation**：目前依據 Eye Centroid 的水平座標判斷左右眼，主要適用於近正面臉部。未來可結合 Facial Landmark 或 Head Pose Estimation，改善側臉、頭部旋轉及眼睛遮擋時的左右眼判斷。(Alternative keypoint model)
 - [ ] Robustness：改善模糊、遮擋、小眼睛及眼睛候選框誤判等問題。
 **Failure Case – Blurred Cat** 背景貓咪因失焦且眼睛尺寸過小，導致 Eye Detection 失敗。
 ![fail_cat_blur](showcase/fail_cat_blur.png)
