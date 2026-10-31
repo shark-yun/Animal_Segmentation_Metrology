@@ -35,7 +35,8 @@
 - 優先選擇雙眼可見的動物，以利眼睛定位及距離量測。
 - 包含不同類別與數量的動物，測試方法的適用性。
 - 額外考慮模糊、動物尺度差異及部分遮擋等情況。
-資料集參考：[COCO 2017 Segmentation — Ultralytics](https://platform.ultralytics.com/ultralytics/datasets/coco2017-seg)
+
+資料來源：[COCO 2017 Segmentation — Ultralytics](https://platform.ultralytics.com/ultralytics/datasets/coco2017-seg)
 
 
 
@@ -48,7 +49,6 @@
 | `000000319062` | 2 Dog | 半臉跟全臉 |
 | `000000169426` | 4 Animals | 多動物距離量測 |
 | `000000017179` | 2 Cats | 模糊影像與失敗案例 |
-| 其他測試影像 | 4 Animals | 多動物距離量測 |
 | 其餘測試影像 | 不同動物組合 | 定性展示與模型穩健性觀察 |
 
 ![Success Cases](showcase/Success_cases.png)
@@ -205,9 +205,6 @@ YOLO-Seg → Animal ROI → Facial Landmark Model → Eye Center → SAM → Dis
 
 
 ## Future Work
-
-
-
 - [ ] Robustness：改善模糊、遮擋、小眼睛及眼睛候選框誤判等問題。
 #### Cat Failure Case: 後面的貓沒有對焦到, 而且太小
 ![fail_cat_blur](showcase/fail_cat_blur.png)
