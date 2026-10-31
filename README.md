@@ -6,7 +6,7 @@
 
 本專案探討如何將深度學習影像分割（Image Segmentation）模型的輸出，應用於實際幾何量測（Metrology）任務。
 
-以 COCO 資料集中的動物影像為例，建立一套由動物偵測、實例分割、眼睛定位、眼睛分割到距離量測的完整流程。
+基於 COCO 動物影像，整合實例分割、眼睛定位與幾何距離量測，並透過人工 Ground Truth 評估量測誤差。
 
 
 
@@ -130,6 +130,29 @@ $$
 | Metrology | 眼睛之間的距離 | MAE、RMSE、MAPE |MAE：衡量模型量測距離與 GT 距離的平均絕對誤差；RMSE 強調較大誤差，MAPE 表示相對百分比誤差|
 
 
+### Evaluation Metrics
+
+**Segmentation IoU**
+
+$$
+IoU = \frac{TP}{TP+FP+FN}
+$$
+
+**Normalized Mean Error (NME)**
+
+$$
+NME = \frac{1}{N}\sum_{i=1}^{N}
+\frac{\|\hat{P}_i-P_i\|_2}{D_{\text{GT, inter-eye}(i)}}
+$$
+
+**Distance Mean Absolute Error (MAE)**
+
+$$
+MAE = \frac{1}{N}\sum_{i=1}^{N}
+|\hat{D}_i-D_i|
+$$
+
+
 ### 4.1 Segmentation Evaluation
 ![seg_comapre](showcase/seg_compare.png)
 ![seg_comapre_table](showcase/seg_score.png)
@@ -139,7 +162,6 @@ $$
 ![eye_comapre_table](showcase/eye_score.png)
 
 ### 4.3 Evaluation Results & Reproducibility
-由於目前僅針對一張影像建立完整的人工標註，因此定量結果代表該 Demo 的表現，不作為整個 COCO 資料集的整體準確率。
 
 本專案僅針對 COCO Image `000000114269`（Dog + Cat）建立完整人工 Ground Truth，因此定量結果為單張影像的 Demo Evaluation，不代表整個 COCO 資料集的平均準確度。
 
@@ -205,12 +227,14 @@ YOLO-Seg → Animal ROI → Facial Landmark Model → Eye Center → SAM → Dis
 
 
 ## Future Work
+- [ ] **Head Pose & Eye Orientation**：目前依據 Eye Centroid 的水平座標判斷左右眼，主要適用於近正面臉部。未來可結合 Facial Landmark 或 Head Pose Estimation，改善側臉、頭部旋轉及眼睛遮擋時的左右眼判斷。
 - [ ] Robustness：改善模糊、遮擋、小眼睛及眼睛候選框誤判等問題。
-#### Cat Failure Case: 後面的貓沒有對焦到, 而且太小
+**Failure Case – Blurred Cat** 背景貓咪因失焦且眼睛尺寸過小，導致 Eye Detection 失敗。
 ![fail_cat_blur](showcase/fail_cat_blur.png)
-- [ ] Multi-species Generalization：支援不同動物類別與姿態的眼睛定位。(目前只做yolo內建10種class)
+- [ ] Multi-species Generalization：擴展至更多動物類別，目前 Animal Detection 僅涵蓋 YOLO COCO Pre-trained Model 的 10 種動物類別。
 - [ ] Validation：擴充人工 Ground Truth 數量，評估不同影像條件下的量測誤差。
 - [ ] Physical Metrology：加入相機校正與尺度資訊，將 Pixel Distance 延伸至實際物理量測。
+
 
 ### Deployment & API
 
