@@ -45,11 +45,14 @@
 |---|---|---|
 | `000000204800` | 2 Dogs | 雙動物分割與眼距量測 |
 | `000000114269` | 1 Dog + 1 Cat | **主要定量驗證案例（Ground Truth Evaluation）** |
-| `000000017179` | 2 Cats | Edge Case |
+| `000000319062` | 2 Dog | 半臉跟全臉 |
+| `000000169426` | 4 Animals | 多動物距離量測 |
+| `000000017179` | 2 Cats | 模糊影像與失敗案例 |
 | 其他測試影像 | 4 Animals | 多動物距離量測 |
-| 其他測試影像 | 2 Animals | 模糊影像與失敗案例 |
 | 其餘測試影像 | 不同動物組合 | 定性展示與模型穩健性觀察 |
 
+![Success Cases](showcase/Success_cases.png)
+完整推論程式與其他測試案例可參考 src.ipynb。
 
 ### 2.3 Ground Truth 與評估策略
 
@@ -128,7 +131,7 @@ $$
 
 ![eye_comapre](showcase/eye_compare.png)
 ![eye_comapre_table](showcase/eye_score.png)
-![Success Cases](showcase/Success_cases.png)
+
 
 由於目前僅針對一張影像建立完整的人工標註，因此定量結果代表該 Demo 的表現，不作為整個 COCO 資料集的整體準確率。
 
