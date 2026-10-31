@@ -58,6 +58,10 @@
 
 七張圖片用於展示模型的完整預測流程，其中選擇 `000000114269`（Dog + Cat）建立人工 Ground Truth，作為主要定量評估案例。
 
+選擇原因： 相較於兩隻狗的簡單案例，此影像包含不同動物類別（Dog & Cat），且動物的 Bounding Boxes 部分重疊，增加了 Instance Segmentation 與 Eye Detection 的挑戰性。同時，兩隻動物的眼睛仍清晰可辨，適合進行人工標註與誤差驗證。
+
+因此，本案例可視為**中等難度（Moderate Difficulty）**的測試場景，在模型挑戰性與 Ground Truth 標註可靠性之間取得平衡。
+
 此影像包含：
 
 - 2 個 Animal Instance Masks
@@ -126,14 +130,26 @@ $$
 | Metrology | 眼睛之間的距離 | MAE、RMSE、MAPE |MAE：衡量模型量測距離與 GT 距離的平均絕對誤差；RMSE 強調較大誤差，MAPE 表示相對百分比誤差|
 
 
+### 4.1 Segmentation Evaluation
 ![seg_comapre](showcase/seg_compare.png)
 ![seg_comapre_table](showcase/seg_score.png)
 
+### 4.2 Eye Localization & Metrology Evaluation
 ![eye_comapre](showcase/eye_compare.png)
 ![eye_comapre_table](showcase/eye_score.png)
 
-
+### 4.3 Evaluation Results & Reproducibility
 由於目前僅針對一張影像建立完整的人工標註，因此定量結果代表該 Demo 的表現，不作為整個 COCO 資料集的整體準確率。
+
+本專案僅針對 COCO Image `000000114269`（Dog + Cat）建立完整人工 Ground Truth，因此定量結果為單張影像的 Demo Evaluation，不代表整個 COCO 資料集的平均準確度。
+
+模型實際輸出的評估結果已匯出為 **CSV 檔案**，存放於 [`results/`](results/) 資料夾，包含：
+
+- Segmentation Metrics
+- Eye Landmark Localization Metrics
+- Distance Measurement Metrics
+
+完整評估程式、計算過程與視覺化結果請參考 [`evaluation.ipynb`](evaluation.ipynb)。
 
 ## 5. Conclusion
 
@@ -176,7 +192,7 @@ python -m pip install -r requirements-lock.txt
 > 模型權重與 COCO 測試影像需放置在程式指定的路徑下，才能正常執行。
 
 
-## Other possible Solution
+## Other Possible Solution
 另一種方法是使用 Dog Facial Landmark Model 取代 Grounding DINO 進行眼睛定位。
 此方法使用眼睛 Landmark 作為 SAM 的 Point Prompt，探索另一種眼睛定位與分割策略。
 
@@ -190,6 +206,8 @@ YOLO-Seg → Animal ROI → Facial Landmark Model → Eye Center → SAM → Dis
 
 ## Future Work
 
+
+
 - [ ] Robustness：改善模糊、遮擋、小眼睛及眼睛候選框誤判等問題。
 #### Cat Failure Case: 後面的貓沒有對焦到, 而且太小
 ![fail_cat_blur](showcase/fail_cat_blur.png)
@@ -197,5 +215,14 @@ YOLO-Seg → Animal ROI → Facial Landmark Model → Eye Center → SAM → Dis
 - [ ] Validation：擴充人工 Ground Truth 數量，評估不同影像條件下的量測誤差。
 - [ ] Physical Metrology：加入相機校正與尺度資訊，將 Pixel Distance 延伸至實際物理量測。
 
+### Deployment & API
 
+本專案目前以 **Jupyter Notebook** 執行離線影像推論及量測，尚未封裝成 REST API 或 Docker Image。
+
+- **Docker**：尚未容器化，目前使用 Conda 執行。
+- **API Documentation**：N/A（目前不提供 REST API）。
+- **Test Account**：N/A（本地模型推論無須帳號登入）。
+- **Environment Configuration**：參考 `.env.example`。
+
+未來可將推論流程封裝為 API，並透過 Docker 提供一致的部署環境。
 
