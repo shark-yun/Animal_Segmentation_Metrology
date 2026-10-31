@@ -142,6 +142,40 @@ $$
 透過 Segmentation、Localization 和 Metrology 三個層級的 Ground Truth 驗證，可以分別分析分割品質、眼睛中心誤差，以及最終距離量測的準確度。
 
 
+
+
+## 實作與環境建置（Installation & Usage）
+
+本專案使用 **Python 3.11 + Conda**，環境名稱為 `animal-metrology`。
+
+### 1. 建立 Conda 環境
+
+```bash
+conda create -n animal-metrology python=3.11 -y
+conda activate animal-metrology
+```
+
+### 2. 安裝所需套件
+
+使用 `requirements-lock.txt` 安裝本專案使用的 Python 套件版本：
+
+```bash
+python -m pip install -r requirements-lock.txt
+```
+
+
+
+### 3. 執行專案
+
+| Notebook | 功能 |
+|---|---|
+| `src.ipynb` | YOLO、Grounding DINO、SAM 推論與距離量測 |
+| `annotation.ipynb` | 人工 Ground Truth 標註 |
+| `evaluation.ipynb` | Segmentation、Localization 與 Metrology 評估 |
+
+> 模型權重與 COCO 測試影像需放置在程式指定的路徑下，才能正常執行。
+
+
 ## Other possible Solution
 另一種方法是使用 Dog Facial Landmark Model 取代 Grounding DINO 進行眼睛定位。
 此方法使用眼睛 Landmark 作為 SAM 的 Point Prompt，探索另一種眼睛定位與分割策略。
