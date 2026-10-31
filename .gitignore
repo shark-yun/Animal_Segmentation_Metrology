@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# Conda environment
+.conda/
+.env/
+venv/
+
+# Model weights
+*.pt
+*.pth
+*.onnx
+
+
+# Jupyter temporary files
+*.log

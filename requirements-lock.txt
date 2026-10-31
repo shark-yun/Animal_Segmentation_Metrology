@@ -1,0 +1,91 @@
+accelerate==1.15.0
+ai-edge-litert==2.3.0
+annotated-doc==0.0.5
+anyio==4.15.1
+appnope @ file:///Users/ec2-user/croot/appnope_1790674996110/work
+asttokens @ file:///Users/ec2-user/croot/asttokens_1793025262284/work
+backports.strenum==1.2.8
+certifi==2026.10.23
+charset-normalizer==3.5.2
+click==8.5.0
+comm @ file:///opt/miniconda3/conda-bld/comm_1763119153703/work
+contourpy==1.3.3
+cycler==0.12.1
+debugpy @ file:///Users/ec2-user/croot/debugpy_1783354541173/work
+executing @ file:///Users/ec2-user/croot/executing_1793197196642/work
+filelock==4.2.4
+flatbuffers==25.12.19
+fonttools==4.68.0
+fsspec==2026.9.0
+h11==0.16.0
+hf-xet==1.8.0
+httpcore==1.0.9
+httpcore2==2.16.0
+httpx==0.28.1
+httpx2==2.16.0
+huggingface_hub==2.4.0
+idna==3.20
+ipykernel @ file:///Users/ec2-user/croot/ipykernel_1785763703688/work
+ipython @ file:///Users/ec2-user/croot/ipython_1790159703595/work
+ipython_pygments_lexers @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_25fteymumy/croot/ipython_pygments_lexers_1744753256449/work
+jedi @ file:///Users/ec2-user/croot/jedi_1793187100586/work
+Jinja2==3.1.6
+jupyter_client @ file:///Users/ec2-user/croot/jupyter_client_1788857884968/work
+jupyter_core @ file:///opt/miniconda3/conda-bld/jupyter_core_1764588284546/work
+kiwisolver==1.5.1
+markdown-it-py==4.2.0
+MarkupSafe==3.0.4
+matplotlib==3.11.2
+matplotlib-inline @ file:///Users/ec2-user/croot/matplotlib-inline_1784795156240/work
+mdurl==0.1.2
+ml_dtypes==0.6.0
+mpmath==1.3.0
+nest-asyncio2 @ file:///Users/ec2-user/croot/nest-asyncio2_1785322296822/work
+networkx==3.6.1
+numpy==2.4.6
+nvidia-ml-py==13.615.71
+opencv-python==5.0.0.93
+packaging==26.3
+pandas==3.1.0
+parso @ file:///Users/ec2-user/croot/parso_1778674012754/work
+pexpect @ file:///opt/miniconda3/conda-bld/pexpect_1762535935939/work
+pillow==13.0.0
+platformdirs @ file:///Users/ec2-user/croot/platformdirs_1791205648558/work
+polars==2.1.0
+polars-runtime-32==2.1.0
+prompt_toolkit @ file:///Users/ec2-user/croot/prompt-toolkit-split_1785325124575/work
+protobuf==7.36.2
+psutil @ file:///Users/ec2-user/croot/psutil_1784875203087/work
+ptyprocess @ file:///opt/miniconda3/conda-bld/ptyprocess_1762424170819/work/dist/ptyprocess-0.7.0-py2.py3-none-any.whl#sha256=3470be7f810474c8a2ecfcd6e02acc6aea8483ab595417fa4e336362a349933e
+pure_eval @ file:///Users/ec2-user/croot/pure_eval_1791208514664/work
+Pygments @ file:///Users/ec2-user/croot/pygments_1790343969008/work
+pyparsing==3.3.3
+PyQt6==6.12.0
+PyQt6-Qt6==6.12.0
+PyQt6_sip==13.13.0
+python-dateutil @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_66ud1l42_h/croot/python-dateutil_1716495741162/work
+PyYAML==6.0.3
+pyzmq @ file:///Users/ec2-user/croot/pyzmq_1789390532363/work
+regex==2026.9.29
+requests==2.34.2
+rich==15.0.0
+safetensors==0.8.0
+shellingham==1.5.4
+six @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_03myqm7p6o/croot/six_1744271511946/work
+stack_data @ file:///opt/miniconda3/conda-bld/stack_data_1757067039886/work
+sympy==1.14.0
+tokenizers==0.23.3
+torch==2.15.0
+torchvision==0.29.2
+tornado @ file:///Users/ec2-user/croot/tornado_1790852148057/work
+tqdm==4.70.1
+traitlets @ file:///Users/ec2-user/croot/traitlets_1793012944285/work
+transformers==5.22.1
+truststore==0.10.5
+typer==0.27.3
+typing_extensions @ file:///Users/ec2-user/croot/typing_extensions_1784100998941/work
+ultralytics==8.4.193
+ultralytics-platform==0.1.101
+ultralytics-thop==2.2.3
+urllib3==2.8.0
+wcwidth @ file:///Users/ec2-user/croot/wcwidth_1792493832450/work
