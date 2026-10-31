@@ -67,19 +67,46 @@
 
 ## 3. 系統架構（Methodology）
 
-主要流程：
+本專案採用 **YOLO26n-Seg + Grounding DINO + SAM 2.1 Tiny**，透過三個模型完成動物實例分割、眼睛定位及眼睛分割，最後使用幾何運算進行距離量測。
 
-Yolo-Seg -> Animal Mask+Box
--> Use Animal Mask+Box as ROI
-Ground Dino (Text Prompt) -> Eye Bounding Box
+### 3.1 模型選擇
 
-Eye Bounding Box
-SAM -> Eye Mask
-get eye cenroid as point to calaute distance
+| Model | 功能 | 選擇原因 |
+|---|---|---|
+| **YOLO26n-Seg** | Animal Detection & Instance Segmentation | 使用 COCO Pre-trained Model，可直接辨識 COCO 中的 10 種動物類別，並取得各動物的 Bounding Box 與 Instance Mask，無須額外訓練 |
+| **Grounding DINO** | Eye Detection | 使用 Text Prompt 進行動物眼睛定位，不需額外訓練專用 Eye Detector |
+| **SAM 2.1 Tiny** | Eye Segmentation | 使用 Eye Bounding Box 作為 Prompt，取得眼睛的精細 Segmentation Mask |
 
-identigy left/right and caluation riht eye distnace
-
+### 3.2 完整流程（Pipeline）
 ![Solution Flow Chart](showcase/solution_flow_chart.png)
+1. **Animal Detection & Segmentation**：使用 YOLO-Seg 偵測動物，取得每隻動物的 Bounding Box 與 Instance Mask。
+2. **Animal ROI Extraction**：利用 Bounding Box 裁切動物，並透過 Instance Mask 去除背景及其他動物的干擾。
+3. **Eye Detection**：使用 Grounding DINO 搭配 Text Prompt 偵測眼睛 Bounding Boxes，並以幾何條件過濾不合理候選框。
+4. **Eye Segmentation**：將 Eye Bounding Boxes 作為 SAM 的 Prompts，產生左右眼 Binary Masks。
+5. **Eye Centroid Extraction**：計算每個 Eye Mask 的幾何中心，並將 ROI 座標轉換回原始影像座標。
+6. **Distance Measurement**：根據眼睛中心的 X 座標判斷左右眼，使用 Euclidean Distance 計算單隻動物的雙眼距離，以及不同動物之間的右眼距離。
+
+
+### 3.3 幾何量測（Metrology）
+
+**Eye Mask Centroid：** 以 Mask 所有前景像素的平均座標作為眼睛中心。
+
+\[
+C_x=\frac{\sum xM(x,y)}{\sum M(x,y)},\qquad
+C_y=\frac{\sum yM(x,y)}{\sum M(x,y)}
+\]
+
+**Euclidean Distance：** 使用兩個眼睛中心座標計算距離。
+
+\[
+D(P_1,P_2)=\sqrt{(x_1-x_2)^2+(y_1-y_2)^2}
+\]
+
+- **Inter-eye Distance**：同一隻動物左右眼中心的距離。
+- **Between-animal Right-eye Distance**：任意兩隻動物右眼中心的距離。
+
+目前量測單位為 Pixel（px）。
+
 
 
 
@@ -105,10 +132,14 @@ identigy left/right and caluation riht eye distnace
 
 由於目前僅針對一張影像建立完整的人工標註，因此定量結果代表該 Demo 的表現，不作為整個 COCO 資料集的整體準確率。
 
+## 5. Conclusion
+
+本專案結合 YOLO26-Seg、Grounding DINO 與 SAM 2.1，實現從多動物影像分割、眼睛定位到幾何距離量測的完整流程。
+
+透過 Segmentation、Localization 和 Metrology 三個層級的 Ground Truth 驗證，可以分別分析分割品質、眼睛中心誤差，以及最終距離量測的準確度。
 
 
-
-## Other Solution
+## Other possible Solution
 另一種方法是使用 Dog Facial Landmark Model 取代 Grounding DINO 進行眼睛定位。
 此方法使用眼睛 Landmark 作為 SAM 的 Point Prompt，探索另一種眼睛定位與分割策略。
 
@@ -120,15 +151,14 @@ YOLO-Seg → Animal ROI → Facial Landmark Model → Eye Center → SAM → Dis
 
 
 
-## Future Work:
+## Future Work
+
+- [ ] Robustness：改善模糊、遮擋、小眼睛及眼睛候選框誤判等問題。
+#### Cat Failure Case: 後面的貓沒有對焦到, 而且太小
 ![fail_cat_blur](showcase/fail_cat_blur.png)
-[ ] Robustness：改善模糊、遮擋、小眼睛及眼睛候選框誤判等問題。
-
-[ ] Multi-species Generalization：支援不同動物類別與姿態的眼睛定位。(目前只做yolo內建10種class)
-
-[ ] Validation：擴充人工 Ground Truth 數量，評估不同影像條件下的量測誤差。
-
-[ ] Physical Metrology：加入相機校正與尺度資訊，將 Pixel Distance 延伸至實際物理量測。
+- [ ] Multi-species Generalization：支援不同動物類別與姿態的眼睛定位。(目前只做yolo內建10種class)
+- [ ] Validation：擴充人工 Ground Truth 數量，評估不同影像條件下的量測誤差。
+- [ ] Physical Metrology：加入相機校正與尺度資訊，將 Pixel Distance 延伸至實際物理量測。
 
 
 
