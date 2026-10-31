@@ -21,7 +21,7 @@
 5. 建立人工標註的 Ground Truth，驗證分割與量測結果。
 6. 分析模型預測誤差對實際 Metrology 任務的影響。
 
----
+
 
 ## 2. 資料集（Dataset）
 
@@ -113,7 +113,7 @@ $$
 
 
 
-## 4.  Evlaution
+## 4.  Evaluation
 
 透過人工 Polygon Annotation 建立 Binary Mask Ground Truth，並與模型預測結果比較。
 
