@@ -82,9 +82,13 @@
 
 
 
-## 4.  Demo
+## 4.  Evlaution
 
-![Success Cases](images/Success_cases.png)
+
+![seg_comapre](showcase/seg_comapre.png)
+![seg_comapre](showcase/eye_comapre.png)
+![Success Cases](showcase/Success_cases.png)
+
 
 
 
