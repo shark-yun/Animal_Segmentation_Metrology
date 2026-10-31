@@ -205,27 +205,44 @@ python -m pip install -r requirements-lock.txt
 
 ### 3. 執行專案
 
-| Notebook | 功能 |
+本專案提供 Jupyter Notebook 與 Python CLI 兩種執行方式。
+
+| File | 功能 |
 |---|---|
-| `src.ipynb` | YOLO、Grounding DINO、SAM 推論與距離量測 |
+| `main.py` | **Command Line Inference**：執行完整 YOLO → Grounding DINO → SAM → Distance Measurement Pipeline，並匯出 CSV、JSON 與視覺化圖片 |
+| `src.ipynb` | 模型推論、眼睛分割與距離量測的開發及實驗 |
 | `annotation.ipynb` | 人工 Ground Truth 標註 |
-| `evaluation.ipynb` | Segmentation、Localization 與 Metrology 評估 |
+| `evaluation.ipynb` | Segmentation、Localization 與 Metrology 定量評估 |
+
+**Command Line Inference**
+
+可直接透過 Terminal 執行完整推論流程：
+
+```bash
+python main.py \
+  --image images/000000114269.jpg \
+  --output results/demo
+```
+
+推論完成後，結果將儲存於指定的 Output Directory：
+
+- `*_distances.csv`：雙眼距離與跨動物右眼距離
+- `*_measurements.json`：動物類別、眼睛中心座標與量測結果
+- `*_preview.png`：眼睛位置及距離量測視覺化
 
 > 模型權重與 COCO 測試影像需放置在程式指定的路徑下，才能正常執行。
 
 ### Deployment & API
 
-本專案目前以 **Jupyter Notebook** 執行離線影像推論及量測，尚未封裝成 REST API 或 Docker Image。
+本專案支援 **Conda 本地環境與 Python CLI 推論**，目前尚未封裝成 REST API 或 Docker Image。
 
+- **Local Deployment**：使用 Conda 建立 Python 環境，透過 `main.py` 執行推論。
 - **Docker**：尚未容器化，目前使用 Conda 執行。
 - **API Documentation**：N/A（目前不提供 REST API）。
-- **Test Account**：N/A（本地模型推論無須帳號登入）。
+- **Test Account**：N/A（本地推論無須帳號登入）。
 - **Environment Configuration**：參考 `.env.example`。
 
-未來可將推論流程封裝為 API，並透過 Docker 提供一致的部署環境。
-
-
-
+未來可將 CLI Pipeline 進一步封裝成 REST API 與 Docker Image，以支援跨平台部署。
 
 
 

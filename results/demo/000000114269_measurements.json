@@ -1,0 +1,42 @@
+{
+  "image": "images/000000114269.jpg",
+  "unit": "px",
+  "assumption": "right_eye is the image-left eye of a near-frontal animal",
+  "animals": [
+    {
+      "animal_id": 1,
+      "class_name": "dog",
+      "right_eye": [
+        261.79896907216494,
+        73.03092783505156
+      ],
+      "left_eye": [
+        332.20063694267515,
+        76.69426751592357
+      ],
+      "inter_eye_distance_px": 70.49691409251245,
+      "status": "success"
+    },
+    {
+      "animal_id": 2,
+      "class_name": "cat",
+      "right_eye": [
+        429.5765765765766,
+        306.48648648648646
+      ],
+      "left_eye": [
+        463.2312925170068,
+        304.57142857142856
+      ],
+      "inter_eye_distance_px": 33.709158278560935,
+      "status": "success"
+    }
+  ],
+  "inter_eye_distances": {
+    "1": 70.49691409251245,
+    "2": 33.709158278560935
+  },
+  "between_right_eyes": {
+    "Animal 1 - Animal 2": 287.49056235841545
+  }
+}
