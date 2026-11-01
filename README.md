@@ -260,10 +260,35 @@ python main.py \
 
 
 ## Other Possible Solution
-另一種方法是使用 Dog Facial Landmark Model 取代 Grounding DINO 進行眼睛定位。
-此方法使用眼睛 Landmark 作為 SAM 的 Point Prompt，探索另一種眼睛定位與分割策略。
 
-目前此方法主要針對狗臉部測試，尚未完成與主要方案在相同資料集上的定量比較。
-YOLO-Seg → Animal ROI → Facial Landmark Model → Eye Center → SAM → Distance Measurement
+### Alternative 1：Dog Facial Landmark + SAM
+使用 Dog Facial Landmark Model 取代 Grounding DINO 進行眼睛定位，並將預測的 Eye Landmarks 作為 SAM 的 Point Prompts，產生眼睛 Segmentation Masks。
+
+
+**Pipeline：**
+YOLO-Seg → Animal ROI → Facial Landmark Model → SAM → Eye Centroid → Distance Measurement
+
 ![solution2](showcase/solution2.png)
 
+**優點：** 使用臉部關鍵點直接定位眼睛，可減少對 Text Prompt Detection 的依賴。
+
+**限制：** 目前主要針對狗臉部測試，尚未驗證不同動物類別的適用性，也未完成與主要方法的定量比較。
+
+
+### Alternative 2：Grounded SAM（Grounding DINO + SAM）
+
+參考：[Grounded-Segment-Anything](https://github.com/IDEA-Research/Grounded-Segment-Anything)
+
+實作範例：[`test/test2_groundsam.ipynb`](test/test2_groundsam.ipynb)
+
+此方法直接使用 Grounding DINO 搭配 Text Prompt 進行 Animal Detection，再透過 SAM 完成 Animal 與 Eye Segmentation，無須額外使用 YOLO-Seg。
+
+**Pipeline：**
+
+Grounding DINO → SAM Animal Segmentation → Animal ROI → Grounding DINO Eye Detection → SAM Eye Segmentation → Eye Centroid → Distance Measurement
+
+**優點：** 簡化模型組合，並支援 Open-vocabulary Detection，可擴展至更多動物類別。
+
+**限制：** Animal Segmentation 也需要經過 Grounding DINO 的 Transformer-based Detection 與 SAM 分割，而非使用輕量化的 CNN-based YOLO-Seg，因此可能增加推論時間與計算成本。
+
+目前兩種方法在 Dog + Cat 案例中皆能完成眼睛定位與距離量測，但仍需進一步比較 Inference Time、Segmentation IoU 與 Distance MAE，才能確認效能差異。
